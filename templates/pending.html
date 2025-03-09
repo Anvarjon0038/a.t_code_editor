@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+  <title>Req</title>
+  <script src="https://cdn.socket.io/4.5.1/socket.io.min.js"></script>
+</head>
+<body>
+<div class="message">Хозир ист як туя дида буроим</div>
+<script>
+const socket=io();
+socket.on('registration-approved',data=>{
+  alert(data.message);
+  fetch('/set_approved',{method:'POST'})
+  .then(response=>response.json())
+  .then(result=>{
+  if(result.status==='approved'){
+  window.location.href='/';
+}
+  });
+  });
+socket.on('registration-rejected',data=>{
+  alert(data.message);
+  window.location.href='/login';
+});
+</script>
+<style>
+  body{
+    font-family:Arial,sans-serif;
+    background:#1e1e1e;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+  }
+  .message{
+    font-size:20px;
+  }
+  </style>
+</body>
+</html>
